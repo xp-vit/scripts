@@ -1,0 +1,62 @@
+#!/bin/bash
+
+ARGS=$@
+
+imports_all_related_scripts() {
+	type secret-config > /dev/null 2>&1 || {
+		echo >&2 "Cannot find secret-config. Maybe you forgot do make install. Aborting..."
+		exit 1;
+	}
+
+	source secret-config
+}
+
+run_only_in_super_user_mode() {
+	local ROOT_UID=0
+	if [[ $EUID -ne $ROOT_UID ]]; then
+		echo "Need a master key, user, hash-algorithm, delimeter. I will read it from the secret-config..."
+		echo "Please type root's password..."
+		su -c "$BASH_SOURCE $ARGS"
+		exit 1;
+	fi
+}
+
+build_password() {
+	local user=$1
+	local domain=$2
+	local key=$3
+	local algorithm=$4
+	local delimeter=$5
+	echo -n "$user$delimeter$domain$delimeter$key" | $algorithm | tr -d "-"
+}
+
+get_password_for_domain() {
+	local user=$(get_user)
+	local domain=$1
+	local key=$(get_master_key)
+	local algorithm=$(get_hash_algorithm)
+	local delimeter=$(get_delimeter)
+	local password=$(build_password $user $domain $key $algorithm $delimeter)
+
+	echo $password
+}
+
+main() {
+	run_only_in_super_user_mode 
+
+	imports_all_related_scripts
+
+	domain=$1
+	if [ -z $domain ]; then 
+		echo "domain is empty"
+	else
+		echo "$domain:"
+	fi
+
+	password=$(get_password_for_domain $domain)
+
+	echo $password 
+	echo $password | xclip
+}
+
+main $1
