@@ -1,25 +1,8 @@
 #!/bin/bash
 
+source common-lib
+
 ARGS=$@
-
-imports_all_related_scripts() {
-	type secret-config > /dev/null 2>&1 || {
-		echo >&2 "Cannot find secret-config. Maybe you forgot do make install. Aborting..."
-		exit 1;
-	}
-
-	source secret-config
-}
-
-run_only_in_super_user_mode() {
-	local ROOT_UID=0
-	if [[ $EUID -ne $ROOT_UID ]]; then
-		echo "Need a master key, user, hash-algorithm, delimeter. I will read it from the secret-config..."
-		echo "Please type root's password..."
-		su -c "$BASH_SOURCE $ARGS"
-		exit 1;
-	fi
-}
 
 build_password() {
 	local user=$1
@@ -42,9 +25,8 @@ get_password_for_domain() {
 }
 
 main() {
-	run_only_in_super_user_mode 
-
-	imports_all_related_scripts
+	run_only_in_super_user_mode $BASH_SOURCE $ARGS
+	import "secret-config"
 
 	domain=$1
 	if [ -z $domain ]; then 

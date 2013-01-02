@@ -1,0 +1,33 @@
+#!/bin/bash
+
+source common-lib
+
+update_portage() {
+	echo "Update portage starting..."
+	emerge --sync --quiet
+	echo "Update portage [done]"
+}
+
+update_system() {
+	echo "Update world starting..."
+	emerge --update --ask world
+	echo "Update world [done]"
+}
+
+check_consistency() {
+	echo "Deepclean world starting..."
+	emerge --depclean --ask
+	echo "Deepclean world [done]"
+	echo "Revdep-rebuild starting..."
+	revdep-rebuild
+	echo "Revdeop-rebuild [done]"
+}
+
+main() {
+	run_only_in_super_user_mode $BASH_SOURCE
+	update_portage
+	update_system
+	check_consistency
+}
+
+main

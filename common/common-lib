@@ -1,0 +1,24 @@
+#!/bin/bash
+
+import() {
+	for module in "$@"
+	do
+		type "$module" > /dev/null 2>&1 || {
+			echo >&2 "Cannot find $module. Maybe you forgot do make install. Aborting..."
+			exit 1;
+		}
+
+		source "$module"
+	done
+}
+
+run_only_in_super_user_mode() {
+	local ROOT_UID=0
+	local args=$@
+	if [[ $EUID -ne $ROOT_UID ]]; then
+		echo "Please type root's password..."
+		su -c "$args"
+		exit 1;
+	fi
+}
+
