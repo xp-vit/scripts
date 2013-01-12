@@ -1,0 +1,23 @@
+#!/bin/bash
+
+download_page() {
+	url=$1
+	page=$(wget -qO - $url)
+	echo "$page"
+}
+
+get_post_and_comments_as_text() {
+	page=$1
+	#TODO: add html parsing
+	echo "$page"
+}
+
+main() {
+	url=$1
+	page=$(download_page $url)
+	post=$(get_post_and_comments_as_text "$page")
+	res=$(html2text <<< "$post")
+	echo "$res"
+}
+
+main $@
