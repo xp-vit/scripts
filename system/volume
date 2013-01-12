@@ -1,11 +1,15 @@
 #!/bin/bash
 
 volume_up() {
-	amixer set Master 3+ unmute
+	amixer set Master 500+ unmute
 }
 
 volume_down() {
-	amixer set Master 3- unmute
+	amixer set Master 500- unmute
+}
+
+toggle_mute_unmute() {
+	amixer set Master toggle
 }
 
 mute() {
@@ -21,7 +25,7 @@ main() {
 	case "$command" in
 	("+") volume_up ;;
 	("-") volume_down ;;
-	("0") mute ;;
+	("0") toggle_mute_unmute;;
 esac
 }
 
