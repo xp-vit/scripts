@@ -1,0 +1,22 @@
+#!/bin/bash
+GOOGLE_CACHE="http://webcache.googleusercontent.com/search?q=cache:"
+
+url_encode() {
+	#TODO: find implementation
+	echo $1
+}
+
+open_url_in_browser() {
+	url=$1
+
+	#TODO: add more universal way
+	xdg-open "$url"
+}
+
+main() {
+	url=$(url_encode $1)
+	url_in_cache="$GOOGLE_CAHCE$url"
+	open_url_in_browser $url_in_cache
+}
+
+main $@
