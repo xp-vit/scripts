@@ -1,0 +1,28 @@
+#!/bin/bash
+
+volume_up() {
+	amixer set Master 3+ unmute
+}
+
+volume_down() {
+	amixer set Master 3- unmute
+}
+
+mute() {
+	amixer set Master mute
+}
+
+unmute() {
+	amixer set Master unmute
+}
+
+main() {
+	command=$1
+	case "$command" in
+	("+") volume_up ;;
+	("-") volume_down ;;
+	("0") mute ;;
+esac
+}
+
+main $@
