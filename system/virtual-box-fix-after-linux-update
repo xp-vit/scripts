@@ -1,0 +1,19 @@
+#!/bin/bash
+
+source common-lib
+
+update_modules() {
+	emerge app-emulation/virtualbox-modules
+}
+
+restart_modules() {
+	/etc/init.d/modules restart
+}
+
+main() {
+	run_only_in_super_user_mode $BASH_SOURCE
+	update_modules
+	restart_modules
+}
+
+main $@
