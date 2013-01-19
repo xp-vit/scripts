@@ -1,0 +1,15 @@
+#!/bin/bash
+clean_downloads_folder() {
+	rm -rf ~/hdd/downloads/*
+}
+
+clean_temp_folder() {
+	rm -rf ~/tmp/*
+}
+
+main() {
+	clean_downloads_folder
+	clean_temp_folder
+}
+
+main $@
