@@ -4,9 +4,8 @@ source all-libs
 
 main() {
 	run_only_in_super_user_mode $BASH_SOURCE
-	update_portage
-	update_system
+	rebuild_world
 	check_consistency
 }
 
-main
+main $@

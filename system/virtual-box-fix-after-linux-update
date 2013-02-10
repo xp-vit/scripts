@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source common-lib
+source all-libs
 
 update_modules() {
 	emerge app-emulation/virtualbox-modules

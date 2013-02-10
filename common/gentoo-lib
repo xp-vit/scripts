@@ -1,0 +1,28 @@
+#!/bin/bash
+
+update_portage() {
+	echo "Update portage starting..."
+	emerge --sync --quiet
+	echo "Update portage [done]"
+}
+
+update_system() {
+	echo "Update world starting..."
+	emerge --update --ask world
+	echo "Update world [done]"
+}
+
+check_consistency() {
+	echo "Deepclean world starting..."
+	emerge --depclean --ask
+	echo "Deepclean world [done]"
+	echo "Revdep-rebuild starting..."
+	revdep-rebuild
+	echo "Revdeop-rebuild [done]"
+}
+
+rebuild_world() {
+	echo "Rebuild world starting..."
+	emerge --ask --update --newuse --deep --with-bdeps=y @world
+	echo "Rebuild world [done]"
+}
