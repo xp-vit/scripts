@@ -1,0 +1,33 @@
+#!/bin/bash
+
+install_git() {
+	echo "WARINING: install_git not implemented"
+}
+
+setup_git() {
+	setup_git_config
+}
+
+setup_git_config() {
+	git config --global user.name "dimhold"
+	git config --global user.email "dimhold@gmail.com"
+}
+
+setup_git_alias() {
+	echo "WARINING: setup_git_alias not implemented"
+}
+
+install_world() {
+	install_git
+}
+
+setup_world() {
+	setup_git
+}
+
+main() {
+	install_world
+	setup_world
+}
+
+main $@
