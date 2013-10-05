@@ -1,7 +1,8 @@
 scripts
 =======
 
-Operations, operations, operations... Can be bored to death! Common scripts that saved my life.
+Just my useful scripts
+
 
 #BE CAREFUL!
 Makefile, scripts are not ready for release. 
