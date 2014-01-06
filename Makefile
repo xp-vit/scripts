@@ -6,7 +6,6 @@ install_scripts:
 	cp common/* /tmp/scripts_tmp
 	cp security/password/* /tmp/scripts_tmp
 	cp security/secret-config/* /tmp/scripts_tmp
-	cp code/* /tmp/scripts_tmp
 	rm /tmp/scripts_tmp/*.md
 	chmod +x /tmp/scripts_tmp/*
 	cp /tmp/scripts_tmp/* /usr/bin/
